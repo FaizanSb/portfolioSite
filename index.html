@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Muhammad Faizan — MERN Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root[data-theme="dark"] {
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --bg3: #1A1A1A;
+    --border: #2A2A2A;
+    --text: #F0F0F0;
+    --text2: #9A9A9A;
+    --text3: #666;
+    --accent: #6C63FF;
+    --accent-dim: rgba(108,99,255,0.12);
+    --accent-glow: rgba(108,99,255,0.3);
+    --tag-bg: #1E1E2E;
+    --tag-text: #A8A3FF;
+    --card-bg: #141414;
+    --nav-bg: rgba(10,10,10,0.85);
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFAFA;
+    --bg2: #F0F0F0;
+    --bg3: #E8E8E8;
+    --border: #DCDCDC;
+    --text: #111111;
+    --text2: #555555;
+    --text3: #999;
+    --accent: #5046E5;
+    --accent-dim: rgba(80,70,229,0.08);
+    --accent-glow: rgba(80,70,229,0.2);
+    --tag-bg: #EEEEFF;
+    --tag-text: #5046E5;
+    --card-bg: #FFFFFF;
+    --nav-bg: rgba(250,250,250,0.85);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+    line-height: 1.6;
+  }
+
+  /* ─── NAV ─────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    height: 60px;
+  }
+  .logo-cursor {
+  display: inline-block;
+  width: 8px; height: 14px;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: middle;
+  border-radius: 1px;
+  animation: blink 0.9s step-end infinite;
+}
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none; align-items: center;
+  }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .theme-toggle {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 2px;
+    transition: border-color 0.2s;
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+  .toggle-pill {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+  }
+  .toggle-pill.active { background: var(--accent); }
+
+  /* ─── SECTIONS ────────────────────────── */
+  section {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 5rem clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  h2.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .section-divider {
+    width: 40px; height: 2px;
+    background: var(--accent);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ─── HERO ────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 80px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-left: clamp(1.5rem, 5vw, 2rem);
+    padding-right: clamp(1.5rem, 5vw, 2rem);
+  }
+  .hero-inner { width: 100%; }
+
+  .hero-greeting {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text2);
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-greeting::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #3CFF7A;
+    box-shadow: 0 0 8px #3CFF7A;
+  }
+
+  h1.hero-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-roles {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+    min-height: 2em;
+  }
+  #typed-text {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .cursor {
+    display: inline-block;
+    width: 2px; height: 1.1em;
+    background: var(--accent);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.9s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero-desc {
+    max-width: 560px;
+    color: var(--text2);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 0.7rem 1.6rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: opacity 0.2s, transform 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 0.7rem 1.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ─── ABOUT ───────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
+
+  .about-text p {
+    color: var(--text2);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+  .about-facts {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+  .fact-row {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+  }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    min-width: 80px;
+    padding-top: 1px;
+  }
+  .fact-value { color: var(--text2); }
+
+  /* ─── SKILLS ──────────────────────────── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .skill-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
+  .skill-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .skill-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── PROJECTS ────────────────────────── */
+  .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .project-card:hover { border-color: var(--accent); box-shadow: 0 0 24px var(--accent-glow); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .project-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .project-badge {
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .project-desc {
+    color: var(--text2);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .project-points { list-style: none; margin-bottom: 1.25rem; }
+  .project-points li {
+    color: var(--text2);
+    font-size: 0.875rem;
+    padding: 0.25rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  .project-points li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+    top: 0.3rem;
+  }
+  .project-footer {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; gap: 0.75rem;
+  }
+  .project-stack { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .project-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.3rem;
+    transition: opacity 0.2s;
+  }
+  .project-link:hover { opacity: 0.75; }
+
+  /* ─── EXPERIENCE ──────────────────────── */
+  .exp-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+  .exp-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 1rem;
+    margin-bottom: 0.5rem; flex-wrap: wrap;
+  }
+  .exp-role {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--text);
+  }
+  .exp-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text3);
+    background: var(--bg3);
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .exp-company {
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .exp-points { list-style: none; }
+  .exp-points li {
+    color: var(--text2);
+    font-size: 0.875rem;
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  .exp-points li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--text3);
+    font-size: 0.75rem;
+  }
+
+  /* ─── ACHIEVEMENTS ────────────────────── */
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .ach-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .ach-card:hover { border-color: var(--accent); }
+  .ach-icon { font-size: 1.4rem; line-height: 1; }
+  .ach-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .ach-sub { font-size: 0.8rem; color: var(--text3); }
+
+  /* ─── EDUCATION ───────────────────────── */
+  .edu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .edu-badge {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    min-width: 80px;
+  }
+  .edu-cgpa {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .edu-cgpa-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text3);
+    margin-top: 3px;
+  }
+  .edu-details { flex: 1; }
+  .edu-degree {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .edu-uni { color: var(--accent); font-size: 0.9rem; margin-bottom: 0.25rem; }
+  .edu-year { font-size: 0.82rem; color: var(--text3); }
+
+  /* ─── CONTACT ─────────────────────────── */
+  .contact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .contact-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .contact-card p { color: var(--text2); margin-bottom: 2rem; font-size: 0.95rem; }
+  .contact-links {
+    display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 1.25rem;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link .icon { font-size: 1rem; }
+
+  /* ─── FOOTER ──────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text3);
+  }
+
+  /* ─── MOBILE NAV ──────────────────────── */
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+  }
+
+  /* ─── SCROLL REVEAL ───────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">
+  ~/faizan<span class="logo-cursor"></span>
+</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <div class="toggle-pill" id="dark-pill">🌙</div>
+    <div class="toggle-pill" id="light-pill">☀️</div>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <p class="hero-greeting">Available for opportunities · Pakistan</p>
+    <h1 class="hero-name">Muhammad<br/>Faizan</h1>
+    <p class="hero-roles">
+      <span id="typed-text"></span><span class="cursor"></span>
+    </p>
+    <p class="hero-desc">
+      MERN Stack Developer building scalable web applications and AI-integrated systems. 
+      Fresh CS graduate with a knack for clean architecture and solving real problems with code.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="mailto:muhammadfaizan4154@gmail.com" class="btn-secondary">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3.77<span>/4</span></div>
+        <div class="stat-label">CGPA</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100<span>+</span></div>
+        <div class="stat-label">Day Streak</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">Projects Shipped</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-eyebrow">01 · About</p>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="section-divider"></div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>
+        I'm a Computer Science graduate from Government College University Faisalabad with a strong
+        background in full-stack web development. My primary stack is MERN — I enjoy architecting
+        React frontends that are fast and intuitive, paired with Node/Express backends that are clean and maintainable.
+      </p>
+      <p>
+        My Final Year Project, <strong style="color:var(--text)">PaperLens AI</strong>, pushed me into the world of 
+        AI integration — building a system that uses the Gemini Vision API to automatically evaluate 
+        handwritten answer sheets. It taught me how to make AI a practical tool, not just a buzzword.
+      </p>
+      <p>
+        Outside of work, I maintain a 100+ day DSA streak on NeetCode. I believe strong fundamentals 
+        make you a better engineer — not just a faster copy-paster.
+      </p>
+    </div>
+    <div class="about-facts reveal">
+      <div class="fact-row">
+        <span class="fact-label">location</span>
+        <span class="fact-value">Chiniot, Punjab, Pakistan</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">degree</span>
+        <span class="fact-value">B.Sc. Computer Science</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">grad</span>
+        <span class="fact-value">June 2026</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">focus</span>
+        <span class="fact-value">Full-Stack + AI Integration</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">status</span>
+        <span class="fact-value" style="color:#3CFF7A">● Open to Work</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-label">email</span>
+        <span class="fact-value">muhammadfaizan4154@gmail.com</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-eyebrow">02 · Skills</p>
+  <h2 class="section-title">Tech Stack</h2>
+  <div class="section-divider"></div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚛️</div>
+      <div class="skill-category">Frontend</div>
+      <div class="skill-name">React.js</div>
+      <div class="skill-tags">
+        <span class="tag">Hooks</span><span class="tag">Context</span><span class="tag">React Router</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🟢</div>
+      <div class="skill-category">Backend</div>
+      <div class="skill-name">Node + Express</div>
+      <div class="skill-tags">
+        <span class="tag">REST APIs</span><span class="tag">Auth.js</span><span class="tag">JWT</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🍃</div>
+      <div class="skill-category">Database</div>
+      <div class="skill-name">MongoDB</div>
+      <div class="skill-tags">
+        <span class="tag">Mongoose</span><span class="tag">Aggregation</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-category">AI / APIs</div>
+      <div class="skill-name">Gemini Vision</div>
+      <div class="skill-tags">
+        <span class="tag">Flask</span><span class="tag">Base64</span><span class="tag">Prompting</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-category">CS Fundamentals</div>
+      <div class="skill-name">DSA</div>
+      <div class="skill-tags">
+        <span class="tag">LeetCode</span><span class="tag">NeetCode</span><span class="tag">OOP</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🛠️</div>
+      <div class="skill-category">DevTools</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-tags">
+        <span class="tag">VS Code</span><span class="tag">Postman</span><span class="tag">CLI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-eyebrow">03 · Projects</p>
+  <h2 class="section-title">What I've Built</h2>
+  <div class="section-divider"></div>
+  <div class="projects-list">
+
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-title">PaperLens AI — Answer Sheet Evaluator</span>
+        <span class="project-badge">FYP · Featured</span>
+      </div>
+      <p class="project-desc">
+        An AI-powered platform that automatically evaluates subjective student answer sheets using 
+        computer vision. Teachers upload bulk PDFs; the system grades, annotates, and generates 
+        structured feedback — eliminating hours of manual review.
+      </p>
+      <ul class="project-points">
+        <li>Integrated Gemini Vision API to analyze handwritten and typed responses with custom evaluation prompts</li>
+        <li>Built bulk PDF processing pipeline with PIL → base64 conversion and safe JSON response parsing</li>
+        <li>Designed full auth flow with Flask + JWT and a responsive React dashboard for result visualization</li>
+      </ul>
+      <div class="project-footer">
+        <div class="project-stack">
+          <span class="tag">React.js</span><span class="tag">Flask</span>
+          <span class="tag">MongoDB</span><span class="tag">Gemini API</span><span class="tag">Python</span>
+        </div>
+        <a href="https://github.com/FaizanSb/PaperLensAI" target="_blank" class="project-link">
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-title">Get Me A Chai — Creator Funding Platform</span>
+        <span class="project-badge">Full-Stack</span>
+      </div>
+      <p class="project-desc">
+        A creator monetization platform where fans can support developers and creators with 
+        micro-payments. Think Patreon, but simpler.
+      </p>
+      <ul class="project-points">
+        <li>Implemented secure OAuth-based authentication using Auth.js with session management</li>
+        <li>Built user profiles, transaction records, and creator dashboards with MongoDB</li>
+        <li>Responsive UI with clean architecture and server-side input validation</li>
+      </ul>
+      <div class="project-footer">
+        <div class="project-stack">
+          <span class="tag">Node.js</span><span class="tag">Express.js</span>
+          <span class="tag">MongoDB</span><span class="tag">Auth.js</span>
+        </div>
+        <a href="https://github.com/FaizanSb/chai" target="_blank" class="project-link">
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-header">
+        <span class="project-title">Interactive Quiz Application</span>
+        <span class="project-badge">Vanilla JS</span>
+      </div>
+      <p class="project-desc">
+        A browser-based quiz app with dynamic question loading, real-time countdown, and instant 
+        score summaries — built with zero frameworks to showcase strong JavaScript fundamentals.
+      </p>
+      <ul class="project-points">
+        <li>Randomized question order with countdown timer and auto-submission on timeout</li>
+        <li>Real-time score tracking displayed in a results summary at quiz completion</li>
+      </ul>
+      <div class="project-footer">
+        <div class="project-stack">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span>
+        </div>
+        <a href="https://github.com/FaizanSb/Quiz-App" target="_blank" class="project-link">
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-eyebrow">04 · Experience</p>
+  <h2 class="section-title">Where I've Worked</h2>
+  <div class="section-divider"></div>
+  <div class="exp-card reveal">
+    <div class="exp-header">
+      <span class="exp-role">Front-End Web Developer Intern</span>
+      <span class="exp-period">Aug 2024 – Sep 2024</span>
+    </div>
+    <div class="exp-company">Code Alpha · Remote</div>
+    <ul class="exp-points">
+      <li>Developed responsive web interfaces and reusable UI components using modern frontend practices</li>
+      <li>Delivered tasks independently while collaborating in a professional remote team environment</li>
+      <li>Gained hands-on experience with real client workflows, code reviews, and deadline management</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS & EDUCATION -->
+<section id="achievements">
+  <p class="section-eyebrow">05 · Recognition</p>
+  <h2 class="section-title">Education & Achievements</h2>
+  <div class="section-divider"></div>
+
+  <div class="edu-card reveal" style="margin-bottom:1.5rem">
+    <div class="edu-badge">
+      <div class="edu-cgpa">3.77</div>
+      <div class="edu-cgpa-label">CGPA</div>
+    </div>
+    <div class="edu-details">
+      <div class="edu-degree">B.Sc. Computer Science</div>
+      <div class="edu-uni">Government College University Faisalabad (Chiniot Campus)</div>
+      <div class="edu-year">Graduated June 2026</div>
+    </div>
+  </div>
+
+  <div class="achievements-grid">
+    <div class="ach-card reveal">
+      <div class="ach-icon">🔥</div>
+      <div>
+        <div class="ach-title">100-Day Coding Streak</div>
+        <div class="ach-sub">NeetCode · DSA Focus</div>
+      </div>
+    </div>
+    <div class="ach-card reveal">
+      <div class="ach-icon">🤖</div>
+      <div>
+        <div class="ach-title">AI Course Completion</div>
+        <div class="ach-sub">Technology Channel · 2025</div>
+      </div>
+    </div>
+    <div class="ach-card reveal">
+      <div class="ach-icon">🏆</div>
+      <div>
+        <div class="ach-title">FYP Showcase</div>
+        <div class="ach-sub">PaperLens AI · University Exhibition</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-eyebrow">06 · Contact</p>
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="section-divider"></div>
+  <div class="contact-card reveal">
+    <h3>Open to Opportunities</h3>
+    <p>Looking for internship / full-time job opportunies as a MERN stack or software Engineer roles. Let's build something together.</p>
+    <div class="contact-links">
+      <a href="mailto:muhammadfaizan4154@gmail.com" class="contact-link">
+        <span class="icon">✉️</span> muhammadfaizan4154@gmail.com
+      </a>
+      <a href="tel:+923457663842" class="contact-link">
+        <span class="icon">📱</span> +92-345-7663842
+      </a>
+      <a href="https://github.com/FaizanSb" target="_blank" class="contact-link">
+        <span class="icon">🐙</span> github.com/FaizanSb
+      </a>
+      <a href="https://www.linkedin.com/in/muhammadfaizansb" target="_blank" class="contact-link">
+        <span class="icon">💼</span> LinkedIn Profile
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p> Muhammad Faizan © 2026</p>
+</footer>
+
+<script>
+  // ─── THEME TOGGLE ───────────────────────────
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    updateTogglePills();
+  }
+  function updateTogglePills() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.getElementById('dark-pill').classList.toggle('active', isDark);
+    document.getElementById('light-pill').classList.toggle('active', !isDark);
+  }
+  updateTogglePills();
+
+  // ─── TYPEWRITER ─────────────────────────────
+  const roles = [
+    'MERN Stack Developer.',
+    'Full-Stack Engineer.',
+    'AI Integration Builder.',
+    'React Enthusiast.',
+    'Problem Solver.'
+  ];
+  let roleIdx = 0, charIdx = 0, deleting = false;
+  const typedEl = document.getElementById('typed-text');
+
+  function type() {
+    const current = roles[roleIdx];
+    if (!deleting) {
+      typedEl.textContent = current.slice(0, ++charIdx);
+      if (charIdx === current.length) {
+        deleting = true;
+        setTimeout(type, 1600);
+        return;
+      }
+    } else {
+      typedEl.textContent = current.slice(0, --charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        roleIdx = (roleIdx + 1) % roles.length;
+      }
+    }
+    setTimeout(type, deleting ? 45 : 80);
+  }
+  type();
+
+  // ─── SCROLL REVEAL ──────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
